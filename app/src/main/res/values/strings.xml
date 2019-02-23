@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">hackathon-kiet</string>
+    <string name="title_activity_two_roads">TwoRoadsActivity</string>
 </resources>
