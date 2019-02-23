@@ -1,8 +1,8 @@
 package com.example.hackathon_kiet
 
-class TwoWayLane(
-    uTurn: Boolean = false,
-    straight: Boolean = false,
-    trafficStatus: TrafficStatus = TrafficStatus.LIGHT,
-    isRunning: Boolean = false
+data class TwoWayLane(
+    var uTurn: Boolean = false,
+    var straight: Boolean = false,
+    var trafficStatus: TrafficStatus = TrafficStatus.HEAVY,
+    var isRunning: Boolean = false
 )
