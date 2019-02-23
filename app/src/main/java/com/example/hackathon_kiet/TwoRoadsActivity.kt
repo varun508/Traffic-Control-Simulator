@@ -12,5 +12,4 @@ class TwoRoadsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_two_roads)
     }
-
 }
