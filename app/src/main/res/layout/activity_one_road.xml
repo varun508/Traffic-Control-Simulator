@@ -65,20 +65,20 @@
 
 
     <View android:layout_width="60dp" android:layout_height="60dp"
-          android:background="@drawable/red_light"
+          tools:background="@drawable/red_light"
           android:id="@+id/leftLaneSignal"
-          app:layout_constraintEnd_toStartOf="@+id/view" app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="@+id/view"/>
+          app:layout_constraintTop_toTopOf="@+id/view" app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintEnd_toStartOf="@+id/view"/>
 
 
     <View android:layout_width="60dp" android:layout_height="60dp"
-          android:background="@drawable/green_light"
+          tools:background="@drawable/green_light"
           android:id="@+id/rightLaneSignal"
           app:layout_constraintStart_toEndOf="@+id/view" app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintTop_toTopOf="@+id/view"/>
     <TextView
-            android:text="60"
-            android:textColor="@color/textBlack"
+            tools:text="10"
+            android:textColor="@color/black"
             android:textSize="24dp"
             android:fontFamily="sans-serif-medium"
             android:textStyle="bold"
@@ -89,8 +89,8 @@
             app:layout_constraintTop_toBottomOf="@+id/leftLaneSignal" android:layout_marginTop="24dp"/>
 
     <TextView
-            android:text="60"
-            android:textColor="@color/textBlack"
+            tools:text="10"
+            android:textColor="@color/black"
             android:textSize="24dp"
             android:fontFamily="sans-serif-medium"
             android:textStyle="bold"
@@ -104,24 +104,28 @@
             android:layout_width="50dp"
             android:layout_height="50dp" app:srcCompat="@drawable/ic_arrow_upward_outline"
             android:id="@+id/leftLaneStraight"
-            android:tint="@color/textLightGray"
+            tools:tint="@color/black"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/leftLaneUturn" app:layout_constraintTop_toBottomOf="@+id/leftLaneTimer"
+            app:layout_constraintEnd_toStartOf="@+id/leftLaneUturn"
+            app:layout_constraintTop_toBottomOf="@+id/leftLaneTimer"
             app:layout_constraintBottom_toBottomOf="@+id/view" app:layout_constraintVertical_bias="0.868"/>
 
     <ImageView
             android:layout_width="50dp"
-            android:layout_height="50dp" app:srcCompat="@drawable/ic_arrow_downward_outline"
+            android:layout_height="50dp"
+            tools:tint="@color/black"
+            app:srcCompat="@drawable/ic_arrow_downward_outline"
             android:id="@+id/rightLaneStraight"
             app:layout_constraintStart_toEndOf="@+id/rightLaneUturn"
-            app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/rightLaneUturn"/>
 
     <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp" app:srcCompat="@drawable/ic_corner_right_down_outline"
             android:id="@+id/leftLaneUturn"
-            android:tint="@color/textLightGray"
+            tools:tint="@color/black"
             app:layout_constraintStart_toEndOf="@+id/leftLaneStraight"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/view"
             app:layout_constraintTop_toTopOf="@+id/leftLaneStraight"/>
@@ -130,6 +134,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp" app:srcCompat="@drawable/ic_corner_left_up_outline"
             android:id="@+id/rightLaneUturn"
+            tools:tint="@color/black"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/rightLaneStraight"
             app:layout_constraintTop_toBottomOf="@+id/rightLaneTimer" app:layout_constraintBottom_toBottomOf="@+id/view"

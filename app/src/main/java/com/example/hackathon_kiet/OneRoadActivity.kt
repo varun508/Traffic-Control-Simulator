@@ -1,99 +1,76 @@
 package com.example.hackathon_kiet
 
 import android.content.res.ColorStateList
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.util.Log
-import android.view.View
-import android.widget.AdapterView
+import android.support.v7.app.AppCompatActivity
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_one_road.*
 import kotlinx.coroutines.*
 
 class OneRoadActivity : AppCompatActivity() {
 
-    private val TAG = "OneRoadActivity"
-
     private val leftLane = TwoWayLane()
     private val rightLane = TwoWayLane()
 
     private var job = Job()
 
-    private val colorInActive = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.textLightGray))
-    private val colorActive = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.black))
-    private val redLight = ContextCompat.getDrawable(
-        this@OneRoadActivity,
-        R.drawable.red_light
-    )
-
-    private val greenLight = ContextCompat.getDrawable(
-        this@OneRoadActivity,
-        R.drawable.green_light
-    )
-
+    private val colorInActive by lazy { ColorStateList.valueOf(resources.getColor(R.color.textLightGray)) }
+    private val colorActive by lazy { ColorStateList.valueOf(resources.getColor(R.color.black)) }
+    private val redLight by lazy {
+        ContextCompat.getDrawable(
+            this@OneRoadActivity,
+            R.drawable.red_light
+        )
+    }
+    private val greenLight by lazy {
+        ContextCompat.getDrawable(
+            this@OneRoadActivity,
+            R.drawable.green_light
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_one_road)
 
-        rightLaneSpinner.onItemSelectedListener = listener()
-        leftLaneSpinner.onItemSelectedListener = listener()
+        GlobalScope.launch(Dispatchers.Main) { while (true) startProcessing() }
     }
-
-    private fun listener() = object : AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-        }
-
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            job.cancel()
-            GlobalScope.launch { startProcessing() }
-        }
-    }
-
 
     private suspend fun startProcessing() {
         rightLane.trafficStatus = getTrafficStatus(rightLaneSpinner.selectedItem.toString())
         leftLane.trafficStatus = getTrafficStatus(leftLaneSpinner.selectedItem.toString())
 
-        var rightTO = rightLane.trafficStatus.getTimeOut()
-        var leftTO = leftLane.trafficStatus.getTimeOut()
+        val rightTO = rightLane.trafficStatus.getTimeOut()
+        val leftTO = leftLane.trafficStatus.getTimeOut()
 
-        if (rightTO == leftTO) {
+        job.run {
             leftLane.start()
             rightLane.stop()
-
             leftLaneTimer.countDown(leftTO)
-            job.join()
-
             leftLane.stop()
             rightLane.start()
-
-        } else if (rightTO > leftTO) {
-
-        } else {
-
+            rightLaneTimer.countDown(rightTO)
         }
     }
 
-    private fun TextView.countDown(seconds: Int) {
-        job = GlobalScope.launch(Dispatchers.Main) {
-            (seconds until 0).forEach {
-                delay(1000)
-                leftLaneTimer.text = it.toString()
-            }
+    private suspend fun TextView.countDown(seconds: Int) {
+        (seconds downTo 0).forEach {
+            delay(1000)
+            text = it.toString()
         }
+        text = seconds.toString()
     }
 
     private fun TwoWayLane.stop() {
         isRunning = false
         straight = false
         uTurn = false
-        if (this == rightLane) {
+        if (this === rightLane) {
             rightLaneSignal.background = redLight
             rightLaneStraight.imageTintList = colorInActive
             rightLaneUturn.imageTintList = colorInActive
-        } else {
+        } else if (this === leftLane) {
             leftLaneSignal.background = redLight
             leftLaneStraight.imageTintList = colorInActive
             leftLaneUturn.imageTintList = colorInActive
@@ -104,11 +81,11 @@ class OneRoadActivity : AppCompatActivity() {
         isRunning = true
         straight = true
         uTurn = true
-        if (this == rightLane) {
+        if (this === rightLane) {
             rightLaneSignal.background = greenLight
             rightLaneStraight.imageTintList = colorActive
             rightLaneUturn.imageTintList = colorActive
-        } else {
+        } else if (this === leftLane) {
             leftLaneSignal.background = greenLight
             leftLaneStraight.imageTintList = colorActive
             leftLaneUturn.imageTintList = colorActive
