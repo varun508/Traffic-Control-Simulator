@@ -1,14 +1,13 @@
 package com.example.hackathon_kiet
 
-import android.content.Context
 import android.content.res.ColorStateList
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 import android.util.Log
 import android.view.View
-import android.widget.Adapter
 import android.widget.AdapterView
+import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_one_road.*
 import kotlinx.coroutines.*
 
@@ -20,6 +19,19 @@ class OneRoadActivity : AppCompatActivity() {
     private val rightLane = TwoWayLane()
 
     private var job = Job()
+
+    private val colorInActive = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.textLightGray))
+    private val colorActive = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.black))
+    private val redLight = ContextCompat.getDrawable(
+        this@OneRoadActivity,
+        R.drawable.red_light
+    )
+
+    private val greenLight = ContextCompat.getDrawable(
+        this@OneRoadActivity,
+        R.drawable.green_light
+    )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,50 +60,59 @@ class OneRoadActivity : AppCompatActivity() {
         var leftTO = leftLane.trafficStatus.getTimeOut()
 
         if (rightTO == leftTO) {
-            leftLane.run {
-                isRunning = true
-                straight = true
-                uTurn = true
-                leftLaneSignal.background = ContextCompat.getDrawable(
-                    this@OneRoadActivity,
-                    R.drawable.green_light
-                )
-                leftLaneStraight.imageTintList = ColorStateList.valueOf(R.color.black)
-                leftLaneUturn.imageTintList = ColorStateList.valueOf(R.color.black)
-            }
+            leftLane.start()
+            rightLane.stop()
 
-            rightLane.run {
-                isRunning = false
-                straight = true
-                uTurn = true
-                leftLaneSignal.background = ContextCompat.getDrawable(
-                    this@OneRoadActivity,
-                    R.drawable.green_light
-                )
-                leftLaneStraight.imageTintList = ColorStateList.valueOf(R.color.black)
-                leftLaneUturn.imageTintList = ColorStateList.valueOf(R.color.black)
-            }
-
-            job = GlobalScope.launch(Dispatchers.Main) {
-                repeat(60) {
-                    delay(1000)
-                    leftLaneTimer.text = (--leftTO).toString()
-                }
-            }
+            leftLaneTimer.countDown(leftTO)
             job.join()
+
+            leftLane.stop()
+            rightLane.start()
 
         } else if (rightTO > leftTO) {
 
         } else {
 
         }
+    }
 
-        Log.d(
-            TAG, "rightLaneOrdinal: ${rightLane.trafficStatus.getTimeOut()} " +
-                    "leftLaneOrdinal: ${leftLane.trafficStatus.getTimeOut()}"
-        )
+    private fun TextView.countDown(seconds: Int) {
+        job = GlobalScope.launch(Dispatchers.Main) {
+            (seconds until 0).forEach {
+                delay(1000)
+                leftLaneTimer.text = it.toString()
+            }
+        }
+    }
 
+    private fun TwoWayLane.stop() {
+        isRunning = false
+        straight = false
+        uTurn = false
+        if (this == rightLane) {
+            rightLaneSignal.background = redLight
+            rightLaneStraight.imageTintList = colorInActive
+            rightLaneUturn.imageTintList = colorInActive
+        } else {
+            leftLaneSignal.background = redLight
+            leftLaneStraight.imageTintList = colorInActive
+            leftLaneUturn.imageTintList = colorInActive
+        }
+    }
 
+    private fun TwoWayLane.start() {
+        isRunning = true
+        straight = true
+        uTurn = true
+        if (this == rightLane) {
+            rightLaneSignal.background = greenLight
+            rightLaneStraight.imageTintList = colorActive
+            rightLaneUturn.imageTintList = colorActive
+        } else {
+            leftLaneSignal.background = greenLight
+            leftLaneStraight.imageTintList = colorActive
+            leftLaneUturn.imageTintList = colorActive
+        }
     }
 
     private fun getTrafficStatus(status: String) =
