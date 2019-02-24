@@ -16,9 +16,9 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, OneRoadActivity::class.java))
     }
     fun toTwo(view: View) {
-        startActivity(Intent(this, OneRoadActivity::class.java))
+        startActivity(Intent(this, TwoRoadsActivity::class.java))
     }
     fun toThree(view: View) {
-        startActivity(Intent(this, OneRoadActivity::class.java))
+        startActivity(Intent(this, ThreeRoadsActivity::class.java))
     }
 }

@@ -70,11 +70,11 @@ class OneRoadActivity : AppCompatActivity() {
         if (this === rightLane) {
             rightLaneSignal.background = redLight
             rightLaneStraight.imageTintList = colorInActive
-            rightLaneUturn.imageTintList = colorInActive
+            rightLaneUTurn.imageTintList = colorInActive
         } else if (this === leftLane) {
             leftLaneSignal.background = redLight
             leftLaneStraight.imageTintList = colorInActive
-            leftLaneUturn.imageTintList = colorInActive
+            leftLaneUTurn.imageTintList = colorInActive
         }
     }
 
@@ -85,11 +85,11 @@ class OneRoadActivity : AppCompatActivity() {
         if (this === rightLane) {
             rightLaneSignal.background = greenLight
             rightLaneStraight.imageTintList = colorActive
-            rightLaneUturn.imageTintList = colorActive
+            rightLaneUTurn.imageTintList = colorActive
         } else if (this === leftLane) {
             leftLaneSignal.background = greenLight
             leftLaneStraight.imageTintList = colorActive
-            leftLaneUturn.imageTintList = colorActive
+            leftLaneUTurn.imageTintList = colorActive
         }
     }
 

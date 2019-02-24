@@ -107,7 +107,7 @@
             android:id="@+id/leftLaneStraight"
             tools:tint="@color/black"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintEnd_toStartOf="@+id/leftLaneUturn"
+            app:layout_constraintEnd_toStartOf="@+id/leftLaneUTurn"
             app:layout_constraintTop_toBottomOf="@+id/leftLaneTimer"
             app:layout_constraintBottom_toBottomOf="@+id/view" app:layout_constraintVertical_bias="0.868"/>
 
@@ -117,15 +117,15 @@
             tools:tint="@color/black"
             app:srcCompat="@drawable/ic_arrow_downward_outline"
             android:id="@+id/rightLaneStraight"
-            app:layout_constraintStart_toEndOf="@+id/rightLaneUturn"
+            app:layout_constraintStart_toEndOf="@+id/rightLaneUTurn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/rightLaneUturn"/>
+            app:layout_constraintTop_toTopOf="@+id/rightLaneUTurn"/>
 
     <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp" app:srcCompat="@drawable/ic_corner_right_down_outline"
-            android:id="@+id/leftLaneUturn"
+            android:id="@+id/leftLaneUTurn"
             tools:tint="@color/black"
             app:layout_constraintStart_toEndOf="@+id/leftLaneStraight"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/view"
@@ -134,7 +134,7 @@
     <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp" app:srcCompat="@drawable/ic_corner_left_up_outline"
-            android:id="@+id/rightLaneUturn"
+            android:id="@+id/rightLaneUTurn"
             tools:tint="@color/black"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintHorizontal_bias="0.5" app:layout_constraintEnd_toStartOf="@+id/rightLaneStraight"
