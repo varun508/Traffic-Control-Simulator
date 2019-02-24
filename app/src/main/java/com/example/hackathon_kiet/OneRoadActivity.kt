@@ -17,6 +17,7 @@ class OneRoadActivity : AppCompatActivity() {
 
     private val colorInActive by lazy { ColorStateList.valueOf(resources.getColor(R.color.textLightGray)) }
     private val colorActive by lazy { ColorStateList.valueOf(resources.getColor(R.color.black)) }
+
     private val redLight by lazy {
         ContextCompat.getDrawable(
             this@OneRoadActivity,
