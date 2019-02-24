@@ -60,10 +60,8 @@ class TwoRoadsActivity : AppCompatActivity() {
             leftLaneTimer.countDown(leftTO)
             rightLane.start()
             leftLane.stop()
-            sideLane.stop()
             rightLaneTimer.countDown(rightTO)
             sideLane.start()
-            leftLane.stop()
             rightLane.stop()
             sideLaneTimer.countDown(sideTO)
         }
@@ -79,7 +77,12 @@ class TwoRoadsActivity : AppCompatActivity() {
             this === rightLaneTimer -> (sideTO + leftTO).toString()
             else -> (leftTO + rightTO).toString()
         }
-
+        GlobalScope.launch(Dispatchers.Main) {
+            (text.toString().toInt() + 1 downTo 0).forEach {
+                delay(1000)
+                text = it.toString()
+            }
+        }
     }
 
     private fun TwoWayLane.stop() {
